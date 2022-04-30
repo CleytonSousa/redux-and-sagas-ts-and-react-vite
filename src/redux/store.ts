@@ -1,0 +1,15 @@
+import {createStore, applyMiddleware, Store, AnyAction} from "redux"
+import createSagaMiddleware from "redux-saga"
+import {rootReducer} from "./reducers"
+import rootSaga from "./sagas";
+
+const sagaMiddleware = createSagaMiddleware();
+
+export const store:Store<unknown, AnyAction> = createStore(
+    rootReducer,
+    applyMiddleware(sagaMiddleware)
+)
+
+sagaMiddleware.run(rootSaga)
+export type RootState = ReturnType<typeof rootReducer>
+export type AppDispatch = typeof store.dispatch
